@@ -24,4 +24,13 @@ import Route from '@ioc:Adonis/Core/Route'
 //   return { hello: 'world' }
 // })
 
-Route.get('/', 'TasksController.index')
+Route.group(()=>{
+
+  Route.get('/', 'TasksController.index')
+  Route.post('/', 'TasksController.create')
+  Route.post('/:id', 'TasksController.details')
+  Route.patch('/:id', 'TasksController.update')
+  Route.delete('/:id', 'TasksController.destroy')
+
+}).prefix('/task')
+
