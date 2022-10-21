@@ -27,8 +27,8 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.group(()=>{
 
   Route.get('/', 'TasksController.index')
-  Route.post('/:id', 'TasksController.details')
   Route.post('/task', 'TasksController.create')
+  Route.post('/:id', 'TasksController.details')
   Route.patch('/task/:id', 'TasksController.update')
   Route.delete('/task/:id', 'TasksController.destroy')
 
