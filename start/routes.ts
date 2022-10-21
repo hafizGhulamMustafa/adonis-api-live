@@ -27,10 +27,16 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.group(()=>{
 
   Route.get('/', 'TasksController.index')
-  Route.post('/', 'TasksController.create')
   Route.post('/:id', 'TasksController.details')
-  Route.patch('/:id', 'TasksController.update')
-  Route.delete('/:id', 'TasksController.destroy')
+  Route.post('/task', 'TasksController.create')
+  Route.patch('/task/:id', 'TasksController.update')
+  Route.delete('/task/:id', 'TasksController.destroy')
 
-}).prefix('/task')
+}).prefix('/api').middleware('auth')
 
+Route.group(() => {
+  // registration logic
+  Route.post('register', 'Users/AuthController.register').as('register')
+  Route.post('login', 'Users/AuthController.login').as('login')
+  Route.post('logout', 'Users/AuthController.logout').as('logout')
+}).prefix('task/')
