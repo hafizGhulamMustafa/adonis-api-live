@@ -25,7 +25,8 @@ export default class TaskValidator {
    */
   public schema = schema.create({
     title:schema.string({trim: true}),
-    description:schema.string({trim:true})
+    description:schema.string({trim:true}),
+    user_id:schema.number.optional()
   })
 
   /**

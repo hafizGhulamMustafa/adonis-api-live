@@ -44,9 +44,10 @@ export default class TasksController {
 
     }
 
-    public async create({request, response}:HttpContextContract){
+    public async create({auth, request, response}:HttpContextContract){
         try {
-            const taskValidate = await request.validate(TaskValidator)
+            let taskValidate = await request.validate(TaskValidator)
+            taskValidate.user_id = auth.user?.id;
 
             const task = await Task.create(taskValidate)
 

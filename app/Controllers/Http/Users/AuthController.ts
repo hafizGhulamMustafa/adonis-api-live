@@ -4,7 +4,7 @@ import User from 'App/Models/User'
 import { rules, schema } from '@ioc:Adonis/Core/Validator'
 
 export default class AuthController {
-  public async register({ request, response }: HttpContextContract) {
+  public async register({auth, request, response }: HttpContextContract) {
     // validate email
     const validations = await schema.create({
       email: schema.string({}, [rules.email(), rules.unique({ table: 'users', column: 'email' })]),
@@ -13,7 +13,8 @@ export default class AuthController {
     })
     const data = await request.validate({ schema: validations })
     const user = await User.create(data)
-    return response.created(user)
+    await auth.login(user)
+    return response.created(auth)
   }
 
   //   login function
@@ -22,10 +23,15 @@ export default class AuthController {
     const email = await request.input('email')
 
     try {
+      
       const token = await auth.use('api').attempt(email, password, {
         expiresIn: '24hours',
+        
       })
-      return token.toJSON()
+      
+     
+      return response.send(token)
+
     } catch {
       return response
         .status(400)

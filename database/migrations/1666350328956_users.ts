@@ -8,6 +8,7 @@ export default class extends BaseSchema {
       table.increments('id').primary()
       table.string('email', 255).notNullable().unique()
       table.string('username',255).notNullable().unique()
+      table.integer('user_type').notNullable().defaultTo(2)
       table.string('avatar').nullable()
       table.dateTime('email_verified_at').nullable()
       table.boolean('is_activated').notNullable().defaultTo(false)
@@ -20,7 +21,6 @@ export default class extends BaseSchema {
       table.timestamp('created_at', { useTz: true }).notNullable()
       table.timestamp('updated_at', { useTz: true }).notNullable()
 
-      table.index(['id', 'username'])
     })
   }
 
